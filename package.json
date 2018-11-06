@@ -1,0 +1,24 @@
+{
+  "name": "tre-treeview-select",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/regular/tre-treeview-select.git"
+  },
+  "keywords": [],
+  "author": "Jan Bölsche <jan@lagomorph.de> (https://regular.codes/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/regular/tre-treeview-select/issues"
+  },
+  "homepage": "https://github.com/regular/tre-treeview-select#readme",
+  "dependencies": {
+    "mutant": "^3.22.1",
+    "tre-treeview": "^1.0.0"
+  }
+}
