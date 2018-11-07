@@ -8,35 +8,36 @@ function renderName(kv) {
   return h('span', name)
 }
 
-function makeId(kv) {
-  return 'k_' + kv.key.substr(1, kv.key.lastIndexOf('.') - 1) 
+function revisionRoot(kv) {
+  return kv.value.content && kv.value.content.revisionRoot || kv.key
 }
 
 module.exports = function(ssb, opts) {
   const summary = opts.summary || renderName
-  const primSelection = Value()
-  const secSelection = Value([])
+  const primSelection = opts.primarySelection || Value()
+  const secSelection = opts.secondarySelections || Value([])
   return Tree(ssb, Object.assign({}, opts, {
     summary: renderItem
   }))
 
   function renderItem(kv) {
-    const id = makeId(kv)
+    const revRoot = revisionRoot(kv)
     return h('span', {
-      id: id,
+      attributes: {
+        'data-key': kv.key
+      },
       classList: computed([primSelection, secSelection], (prime, secondary) => {
-        if (prime == id) return ['selected']
-        if (secondary.includes(id)) return ['secondary-selected']
+        if (prime == revRoot) return ['selected']
+        if (secondary.includes(revRoot)) return ['secondary-selected']
       }),
       'ev-click': e => {
-        console.log(id)
         if (e.ctrlKey) {
           let list = secSelection() || []
-          if (!list.includes(id)) list.push(id)
-          else list = list.filter( i => i !== id )
+          if (!list.includes(revRoot)) list.push(revRoot)
+          else list = list.filter( i => i !== revRoot )
           secSelection.set(list)
         } else {
-          primSelection.set(id)
+          primSelection.set(revRoot)
         }
         e.preventDefault()
       }
