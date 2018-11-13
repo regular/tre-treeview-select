@@ -39,7 +39,9 @@ module.exports = function(ssb, opts) {
         } else {
           primSelection.set(revRoot)
         }
+        e.stopPropagation()
         e.preventDefault()
+        return false
       }
     }, summary(kv))
   }
