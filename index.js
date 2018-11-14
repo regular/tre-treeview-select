@@ -20,7 +20,7 @@ module.exports = function(ssb, opts) {
     summary: renderItem
   }))
 
-  function renderItem(kv) {
+  function renderItem(kv, ctx) {
     const revRoot = revisionRoot(kv)
     return h('span', {
       attributes: {
@@ -43,7 +43,7 @@ module.exports = function(ssb, opts) {
         e.preventDefault()
         return false
       }
-    }, summary(kv))
+    }, summary(kv, ctx))
   }
 
 }
