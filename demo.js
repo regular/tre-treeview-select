@@ -3,6 +3,7 @@ const Tree = require('.')
 const Str = require('tre-string')
 const h = require('mutant/html-element')
 const Value = require('mutant/value')
+const computed = require('mutant/computed')
 const setStyle = require('module-styles')('tre-treview-select-demo')
 
 function parentHasClsass(el, cl) {
@@ -50,10 +51,11 @@ client( (err, ssb, config) => {
     }
   })
   
-  const sel = Value()
-
+  const sel_kv = Value()
+  const sel = computed(sel_kv, kv => kv && kv.key)
+  
   const renderTree = Tree(ssb, {
-    primarySelection: sel,
+    primarySelection: sel_kv,
     summary: kv => [h('span', kv.value.content.type), renderString(kv.value.content.name)]
   })
 

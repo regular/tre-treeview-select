@@ -26,18 +26,18 @@ module.exports = function(ssb, opts) {
       attributes: {
         'data-key': kv.key
       },
-      classList: computed([primSelection, secSelection], (prime, secondary) => {
-        if (prime == revRoot) return ['selected']
-        if (secondary.includes(revRoot)) return ['secondary-selected']
+      classList: computed([primSelection, secSelection], (kv1, kv2) => {
+        if (kv1 && revisionRoot(kv1) == revRoot) return ['selected']
+        if (kv2.map(revisionRoot).includes(revRoot)) return ['secondary-selected']
       }),
       'ev-click': e => {
         if (e.ctrlKey) {
           let list = secSelection() || []
-          if (!list.includes(revRoot)) list.push(revRoot)
-          else list = list.filter( i => i !== revRoot )
+          if (!list.map(revisionRoot).includes(revRoot)) list.push(kv)
+          else list = list.filter( i => revisionRoot(i) !== revRoot )
           secSelection.set(list)
         } else {
-          primSelection.set(revRoot)
+          primSelection.set(kv)
         }
         e.stopPropagation()
         e.preventDefault()
