@@ -37,7 +37,11 @@ module.exports = function(ssb, opts) {
           else list = list.filter( i => revisionRoot(i) !== revRoot )
           secSelection.set(list)
         } else {
-          primSelection.set(kv)
+          const curr = primSelection()
+          const k = curr && curr.key
+          if (kv.key !== k) {
+            primSelection.set(kv)
+          }
         }
         e.stopPropagation()
         e.preventDefault()
