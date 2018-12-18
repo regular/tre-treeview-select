@@ -41,11 +41,10 @@ module.exports = function(ssb, opts) {
           const k = curr && curr.key
           if (kv.key !== k) {
             primSelection.set(kv)
+            e.stopPropagation()
+            e.preventDefault()
           }
         }
-        e.stopPropagation()
-        e.preventDefault()
-        return false
       }
     }, summary(kv, ctx))
   }
