@@ -22,7 +22,8 @@ module.exports = function(ssb, opts) {
 
   function renderItem(kv, ctx) {
     const revRoot = revisionRoot(kv)
-    return h('span', {
+    let span
+    return span = h('span', {
       attributes: {
         'data-key': kv.key
       },
@@ -31,6 +32,7 @@ module.exports = function(ssb, opts) {
         if (kv2.map(revisionRoot).includes(revRoot)) return ['secondary-selected']
       }),
       'ev-click': e => {
+        if (e.target == span) return
         if (e.ctrlKey) {
           let list = secSelection() || []
           if (!list.map(revisionRoot).includes(revRoot)) list.push(kv)
